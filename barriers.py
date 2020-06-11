@@ -1,9 +1,12 @@
+"""Create and store impassable barriers on the grid"""
+
 from enum import IntEnum
 from collections import namedtuple
 from typing import Optional
 from pygame import Vector2
 
 class Rotation(IntEnum):
+    """Clockwise rotations in degrees"""
     NONE = 0
     CW_90 = 90
     CW_180 = 180

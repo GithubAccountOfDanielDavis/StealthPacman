@@ -1,3 +1,5 @@
+"""Color constants"""
+
 from pygame import Color
 
 BLACK = Color(0, 0, 0)

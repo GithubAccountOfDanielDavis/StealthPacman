@@ -26,9 +26,11 @@ def from_screen(point: pg.Vector2) -> pg.Vector2:
 BORDER_RECT = pg.Rect(0, 0, COLUMNS, ROWS)
 
 def rect(*, left, top, width, height):
+    """Wrapper for pygame Rect using kwargs"""
     return pg.Rect(left, top, width, height)
 
 def draw_grid_rectangle(grid_rect: pg.Rect):
+    """Draw grid-based rect onto screen"""
     screen_rect = rect(
         left=grid_rect.left * CELL_SIZE + MARGIN,
         top=grid_rect.top * CELL_SIZE + MARGIN,
@@ -39,6 +41,7 @@ def draw_grid_rectangle(grid_rect: pg.Rect):
     return render
 
 def draw_grid_polygon(polygon: Sequence[pg.Vector2]):
+    """Draw grid-based polygon onto screen"""
     points = [p * CELL_SIZE + MARGIN_OFFSET for p in polygon]
     def render(screen: pg.Surface):
         pg.draw.polygon(screen, colors.BLUE, points, width=0)

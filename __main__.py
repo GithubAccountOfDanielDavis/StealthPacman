@@ -1,3 +1,5 @@
+"""Initialization for pygame and main game loop"""
+
 import typing
 from collections import namedtuple
 
@@ -8,10 +10,12 @@ import colors
 from barriers import BARRIERS
 
 def fill_background(screen: pg.Surface):
+    """Fill entire pygame surface with a solid color"""
     screen.fill(colors.BLACK)
 
 Renderable = typing.Callable[[pg.Surface], None]
 def game_loop(renderables: typing.Sequence[Renderable]):
+    """Initialize pygame and run loop until it's over"""
     pg.init()
     pg.display.set_caption('Pacman')
     screen = pg.display.set_mode(grid.SCREEN_SIZE)
