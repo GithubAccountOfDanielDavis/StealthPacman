@@ -28,8 +28,11 @@ def game_loop(renderables: typing.Sequence[Renderable]):
     renderables.append(player.render)
 
     while len((events := get_events())[pg.QUIT]) < 1:
-        player.handle_keydown(events[pg.KEYDOWN])
-        player.handle_keyup(events[pg.KEYUP])
+        for event in events[pg.KEYDOWN]:
+            player.handle_keydown(event)
+        for event in events[pg.KEYUP]:
+            player.handle_keyup(event)
+        player.update()
         for render_to in renderables:
             render_to(screen)
         pg.display.update()
