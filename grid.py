@@ -22,13 +22,21 @@ def from_screen(point: pg.Vector2) -> pg.Vector2:
     """Convert from pixel position to maze coordinates"""
     return (point - pg.Vector2(MARGIN, MARGIN)) // CELL_SIZE
 
+def scale_to_screen(val):
+    """Scale grid size to screen size"""
+    return val * CELL_SIZE
+
 BORDER_RECT = pg.Rect(0, 0, COLUMNS, ROWS)
+
+def draw_border():
+    """Draw rectangle around grid with margins"""
+    return draw_rectangle(BORDER_RECT)
 
 def rect(*, left, top, width, height):
     """Wrapper for pygame Rect using kwargs"""
     return pg.Rect(left, top, width, height)
 
-def draw_grid_rectangle(grid_rect: pg.Rect):
+def draw_rectangle(grid_rect: pg.Rect):
     """Draw grid-based rect onto screen"""
     screen_rect = rect(
         left=grid_rect.left * CELL_SIZE + MARGIN,
@@ -39,7 +47,7 @@ def draw_grid_rectangle(grid_rect: pg.Rect):
         pg.draw.rect(screen, colors.BLUE, screen_rect, width=3)
     return render
 
-def draw_grid_polygon(polygon: Sequence[pg.Vector2]):
+def draw_polygon(polygon: Sequence[pg.Vector2]):
     """Draw grid-based polygon onto screen"""
     points = [p * CELL_SIZE + MARGIN_OFFSET for p in polygon]
     def render(screen: pg.Surface):
