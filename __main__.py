@@ -1,12 +1,10 @@
 """Initialization for pygame and main game loop"""
 
 import typing
-from collections import namedtuple
-
 import pygame as pg
+
 import grid
 import colors
-
 from barriers import BARRIERS
 
 def fill_background(screen: pg.Surface):

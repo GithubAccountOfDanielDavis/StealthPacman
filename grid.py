@@ -1,9 +1,8 @@
 """Define on-screen grid"""
 
-from collections import namedtuple
 from typing import Sequence
-import colors
 import pygame as pg
+import colors
 
 CELL_SIZE = 20
 COLUMNS = 27
