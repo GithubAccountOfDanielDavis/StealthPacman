@@ -20,7 +20,7 @@ class Player:
     color = colors.YELLOW
     radius = 0.9
     screen_radius = grid.scale_to_screen(radius)
-    speed = 0.5
+    speed = 10
 
     def __init__(self, position):
         self.position = position
@@ -37,13 +37,14 @@ class Player:
         if event.key in self.pressed:
             self.pressed.pop(event.key)
 
-    def update(self):
+    def update(self, milliseconds):
         """Update player position"""
+        seconds = milliseconds / 1000.0
         direction = (
             self.Directions['stationary']
             if len(self.pressed) == 0
             else next(reversed(self.pressed.values())))
-        self.position += direction * self.speed
+        self.position += direction * self.speed * seconds
 
     def render(self, screen: pg.Surface):
         """Render player to screen"""

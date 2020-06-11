@@ -24,6 +24,8 @@ def game_loop(renderables: typing.Sequence[Renderable]):
     pg.display.set_caption('Pacman')
     screen = pg.display.set_mode(grid.SCREEN_SIZE)
     clock = pg.time.Clock()
+    milliseconds = clock.tick(60)
+
     player = Player(pg.Vector2(13.5, 23))
     renderables.append(player.render)
 
@@ -32,11 +34,11 @@ def game_loop(renderables: typing.Sequence[Renderable]):
             player.handle_keydown(event)
         for event in events[pg.KEYUP]:
             player.handle_keyup(event)
-        player.update()
+        player.update(milliseconds)
         for render_to in renderables:
             render_to(screen)
         pg.display.update()
-        clock.tick(30)
+        milliseconds = clock.tick(60)
     pg.quit()
     quit()
 
