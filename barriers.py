@@ -14,12 +14,12 @@ class Rotation(IntEnum):
 
 Stem = namedtuple('Stem', ['left_offset', 'width', 'height'])
 
-def make_barrier(*,
-        top, left, width, height,
+def make_barrier(
+        *, top, left, width, height,
         stem: Optional[Stem] = None,
         rotation: Optional[Rotation] = None):
     """Create a polygonal barrier on the grid with rounded corners.
-    
+
     Stems allow for ˥-shaped, T-shaped, and Г-shaped barriers.
     Stems always point down by default and must be rotated.
     Ommitting a stem just creates a rounded rectangle.
@@ -36,26 +36,24 @@ def make_barrier(*,
         assert a == b
     """
     if top < 0 or left < 0 or width < 1 or height < 1 or (
-        stem is not None and (
-            stem.left_offset < 0
-            or stem.width < 1
-            or stem.height < 1
-            or stem.left_offset + stem.width > width
-        )
-    ):
+            stem is not None and (
+                stem.left_offset < 0
+                or stem.width < 1
+                or stem.height < 1
+                or stem.left_offset + stem.width > width)):
         raise ValueError('Invalid barrier shape')
 
     topleft, topright, bottomleft, bottomright = (
-        Vector2(0, 0),      Vector2(width, 0),
+        Vector2(0, 0), Vector2(width, 0),
         Vector2(0, height), Vector2(width, height))
-    
+
     points = [topleft, topright]
 
     if stem is not None:
         stem_tl, stem_tr, stem_bl, stem_br = (
-            Vector2(stem.left_offset,              height),
+            Vector2(stem.left_offset, height),
             Vector2(stem.left_offset + stem.width, height),
-            Vector2(stem.left_offset,              height + stem.height),
+            Vector2(stem.left_offset, height + stem.height),
             Vector2(stem.left_offset + stem.width, height + stem.height))
         points += (
             [stem_br]
@@ -90,17 +88,20 @@ BARRIERS = [
     make_barrier(left=22, top=2, width=3, height=2),
 
     # Next row
-    make_barrier(left=2,  top=6, width=3, height=1),
+    make_barrier(left=2, top=6, width=3, height=1),
     make_barrier(left=22, top=6, width=3, height=1),
 
     # Middle section
     make_barrier(left=0, top=9, width=5, height=10),
-    make_barrier(left=7, top=6, width=7, height=1,
+    make_barrier(
+        left=7, top=6, width=7, height=1,
         stem=Stem(left_offset=3, width=1, height=3),
         rotation=Rotation.CW_270),
-    make_barrier(left=10, top=6, width=7, height=1,
+    make_barrier(
+        left=10, top=6, width=7, height=1,
         stem=Stem(left_offset=3, width=1, height=3)),
-    make_barrier(left=16, top=6, width=7, height=1,
+    make_barrier(
+        left=16, top=6, width=7, height=1,
         stem=Stem(left_offset=3, width=1, height=3),
         rotation=Rotation.CW_90),
     make_barrier(left=22, top=9, width=5, height=10),
@@ -111,23 +112,29 @@ BARRIERS = [
     make_barrier(left=19, top=15, width=1, height=4),
 
     # Bottom, top row
-    make_barrier(left=2, top=21, width=3, height=1,
+    make_barrier(
+        left=2, top=21, width=3, height=1,
         stem=Stem(left_offset=2, width=1, height=3)),
     make_barrier(left=7, top=21, width=4, height=1),
-    make_barrier(left=10, top=18, width=7, height=1,
+    make_barrier(
+        left=10, top=18, width=7, height=1,
         stem=Stem(left_offset=3, width=1, height=3)),
     make_barrier(left=16, top=21, width=4, height=1),
-    make_barrier(left=22, top=21, width=3, height=1,
+    make_barrier(
+        left=22, top=21, width=3, height=1,
         stem=Stem(left_offset=0, width=1, height=3)),
-    
+
     # Bottom, bottom row
     make_barrier(left=0, top=24, width=2, height=1),
-    make_barrier(left=2, top=24, width=9, height=1,
+    make_barrier(
+        left=2, top=24, width=9, height=1,
         stem=Stem(left_offset=3, width=1, height=3),
         rotation=Rotation.CW_180),
-    make_barrier(left=10, top=24, width=7, height=1,
+    make_barrier(
+        left=10, top=24, width=7, height=1,
         stem=Stem(left_offset=3, width=1, height=3)),
-    make_barrier(left=16, top=24, width=9, height=1,
+    make_barrier(
+        left=16, top=24, width=9, height=1,
         stem=Stem(left_offset=5, width=1, height=3),
         rotation=Rotation.CW_180),
     make_barrier(left=25, top=24, width=2, height=1),

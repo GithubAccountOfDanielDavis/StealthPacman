@@ -19,10 +19,9 @@ def game_loop(renderables: typing.Sequence[Renderable]):
     screen = pg.display.set_mode(grid.SCREEN_SIZE)
     clock = pg.time.Clock()
 
-    running = True
-    while (running := not any(e.type == pg.QUIT for e in pg.event.get())):
-        for r in renderables:
-            r(screen)
+    while not any(e.type == pg.QUIT for e in pg.event.get()):
+        for render_to in renderables:
+            render_to(screen)
         pg.display.update()
         clock.tick(30)
     pg.quit()
