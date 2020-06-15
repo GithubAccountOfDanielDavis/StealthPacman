@@ -1,12 +1,13 @@
 """Initialization for pygame and main game loop"""
 
 import typing
+import sys
 from collections import defaultdict
 import pygame as pg
 
 import grid
 import colors
-from barriers import BARRIERS
+import barriers
 from player import Player
 
 def get_events():
@@ -18,6 +19,7 @@ def get_events():
     return event_dict
 
 def display_fps(milliseconds, screen):
+    """Show FPS at the center of the screen"""
     font = pg.font.SysFont('FreeMono, Monospace', 30, True)
     text = font.render(f'FPS: {int(1.0 / (milliseconds / 1000.0))}', True, (0, 0, 0))
     text.get_rect().left = 0
@@ -47,17 +49,15 @@ def game_loop(renderables: typing.Sequence[Renderable], fps=90):
         pg.display.update()
         milliseconds = clock.tick(fps)
     pg.quit()
-    quit()
+    sys.exit()
 
 def fill_background(screen: pg.Surface):
     """Fill entire pygame surface with a solid color"""
     screen.fill(colors.BLACK)
 
 if __name__ == '__main__':
-    BARRIER_RENDERERS = [grid.draw_polygon(b) for b in BARRIERS]
     RENDERABLES = [
         fill_background,
-        grid.draw_border()
+        barriers.render,
     ]
-    RENDERABLES += BARRIER_RENDERERS
     game_loop(renderables=RENDERABLES)

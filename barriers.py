@@ -3,7 +3,9 @@
 from enum import IntEnum
 from collections import namedtuple
 from typing import Optional
-from pygame import Vector2
+from pygame import Vector2, Surface, SRCALPHA
+import pygame.mask as mask
+import grid
 
 class Rotation(IntEnum):
     """Clockwise rotations in degrees"""
@@ -79,7 +81,7 @@ def make_barrier(
 
     return points
 
-BARRIERS = [
+BARRIER_POLYGONS = [
     # Top row
     make_barrier(left=2, top=2, width=3, height=2),
     make_barrier(left=7, top=2, width=4, height=2),
@@ -139,3 +141,15 @@ BARRIERS = [
         rotation=Rotation.CW_180),
     make_barrier(left=25, top=24, width=2, height=1),
 ]
+
+BARRIER_SURFACE = Surface(grid.SCREEN_SIZE, SRCALPHA)
+#BARRIER_SURFACE.fill((0, 0, 0, 0))
+for polygon in BARRIER_POLYGONS:
+    grid.draw_polygon(polygon)(BARRIER_SURFACE)
+grid.draw_border()(BARRIER_SURFACE)
+
+BARRIER_MASK = mask.from_surface(BARRIER_SURFACE)
+
+def render(screen: Surface):
+    """Render barriers to screen"""
+    screen.blit(BARRIER_SURFACE, (0, 0))
